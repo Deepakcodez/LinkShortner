@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
 const URLSchema = new mongoose.Schema(
   {
@@ -11,13 +11,7 @@ const URLSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    visitHostory: [
-      {
-        timestamp: {
-          type: Number,
-        },
-      },
-    ],
+    
   },
   { timestamp: true }
 );
