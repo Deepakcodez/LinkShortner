@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const URLSchema = new mongoose.Schema(
   {
@@ -21,3 +21,8 @@ const URLSchema = new mongoose.Schema(
   },
   { timestamp: true }
 );
+
+
+const URLs =  models.URLs || model("URLs", URLSchema);
+
+export default URLs;

@@ -1,9 +1,14 @@
 import Image from "next/image";
-
+import Mainpg from "@/app/_components/Mainpg";
+import Navbar from "./_components/Navbar";
 export default function Home() {
   return (
    <>
-   <h1>URL shortner</h1>
+   <div className="w-full h-screen bg-slate-800">
+   <Navbar/>
+   <Mainpg/>
+
+   </div>
    </>
   );
 }
