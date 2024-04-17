@@ -28,13 +28,23 @@ export async  function POST(request){
     const shortURL = nanoid() 
     console.log('>>>>>>>>>>>nano id',shortURL)
 
+     
+    let urlDocument = await URLs.findOne({ redirectURL: URL });
+   console.log('>>>>>>>>>>>', urlDocument)  
+  
+    if(!urlDocument){
+      const urlDocument =   new URLs({
+        shortURL,
+        redirectURL : URL,
+        clickes : 0,
+      })
+    }
     
-    const newURL =   new URLs({
-      shortURL
-      redirectURL : URL,
-    })
-    
-    const savedURL = await newURL.save();
+    // increasing clickes in every api hit wheater it is exist or not 
+    // if not than firstly create the entry than increase by 1
+    urlDocument.clickes += 1;
+
+    const savedURL = await urlDocument.save();
 
 
     // Return a successful response with the query parameters
