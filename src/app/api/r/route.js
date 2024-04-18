@@ -2,14 +2,17 @@
 
 import { NextResponse } from "next/server";
 import URLs from "@/app/models/url";
-import  { connect } from '../../../dbConfig/dbConnection'
+import  { connect } from '../../dbConfig/dbConnection'
 connect()
 
 
-export async function GET(reqest,params) {
+export async function POST(request) {
 
-  const shortId =  params.params.shortId
-  console.log('>>>>>>>>>>>', shortId)
+
+  //getting body data
+  const reqBody = await request.json();
+  const {shortId} = reqBody
+  console.log('>>>>>>>>>>>from backend', shortId)
 
   let urlDocument = await URLs.findOne({shortURL : shortId });
 
@@ -25,5 +28,8 @@ export async function GET(reqest,params) {
   }
 
   // Redirect the client to the specified URL
-  return NextResponse.redirect(redirectTo);
+  return NextResponse.json({
+    redirectTo,
+    success: true,
+  });
 }
