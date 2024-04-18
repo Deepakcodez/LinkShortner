@@ -1,7 +1,7 @@
 // pages/api/redirect.js
 
 import { NextResponse } from "next/server";
-import URLs from "@/app/models/url";
+import URLs from "../../models/url";
 import  { connect } from '../../dbConfig/dbConnection'
 connect()
 
