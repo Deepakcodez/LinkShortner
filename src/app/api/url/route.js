@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { customAlphabet } from 'nanoid'
-import URLs from "@/app/models/url";
+import URLs from "../../models/url";
 import  { connect } from '../../dbConfig/dbConnection'
 
 connect()
