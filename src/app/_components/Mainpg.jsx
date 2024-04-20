@@ -19,7 +19,7 @@ const Mainpg = () => {
             const resp = await axios.post("/api/url", URL)
             console.log('>>>>>>>>>>>', resp.data.savedURL)
             const respShortURL = resp.data.savedURL.shortURL;
-            const shortURLTEMPLATE = `http://localhost:3000/ls/${respShortURL}`;
+            const shortURLTEMPLATE = `urlss.vercel.app/ls/${respShortURL}`;
             setShortURL(shortURLTEMPLATE)
             setRedirectURL(resp.data.savedURL.redirectURL)
             setClicks(resp.data.savedURL.clickes)
