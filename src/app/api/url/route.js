@@ -11,9 +11,9 @@ export async  function POST(request){
 
     //getting body data
     const reqBody = await request.json();
-    const {URL} = reqBody
+    let {URL} = reqBody
     console.log('>>>>>>>>>>>body data', URL);
-
+    
     
     if(!URL){
       return  NextResponse.json({
@@ -30,14 +30,16 @@ export async  function POST(request){
 
      
     let urlDocument = await URLs.findOne({ redirectURL: URL });
-   console.log('>>>>>>>>>>>', urlDocument)  
+   console.log('>>>>>>>>>>>url in db', urlDocument)  
   
-    if(!urlDocument){
-      const urlDocument =   new URLs({
+    if(!urlDocument || urlDocument === null){
+      const newUrlDocument =   new URLs({
         shortURL,
         redirectURL : URL,
         clickes : 0,
       })
+      urlDocument = await newUrlDocument.save();
+
     }
     
     // increasing clickes in every api hit wheater it is exist or not 
@@ -51,7 +53,7 @@ export async  function POST(request){
     return NextResponse.json({
       savedURL,
       success: true,
-    });
+    },{status:200});
 
   } catch (error) {
     return  NextResponse.json({
