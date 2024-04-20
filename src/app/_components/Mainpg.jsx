@@ -8,6 +8,7 @@ const Mainpg = () => {
     const [shortURL, setShortURL] = useState("")
     const [redirectURL, setRedirectURL] = useState(null)
     const [clicks, setClicks] = useState(Number)
+    const [shortId, setShortId] = useState(null)
     const changehandler = (e) => {
         e.preventDefault()
         setURL({URL : e.target.value})
@@ -23,6 +24,7 @@ const Mainpg = () => {
             setShortURL(shortURLTEMPLATE)
             setRedirectURL(resp.data.savedURL.redirectURL)
             setClicks(resp.data.savedURL.clickes)
+            setShortId(resp.data.savedURL.shortURL)
             setURL({url : ""})
 
         } catch (error) {
@@ -50,7 +52,7 @@ const Mainpg = () => {
                         onClick={convert}
                         className="px-2 h-9 hover:bg-violet-300 bg-violet-200 rounded-lg ring-violet-500 ring-1">Convert</button>
                 </div>
-             <ShortURLCard shortURL={shortURL} redirectURL={redirectURL} clicks={clicks} />
+             <ShortURLCard shortId={shortId} shortURL={shortURL} redirectURL={redirectURL} clicks={clicks} />
             </div>
         </>
     );

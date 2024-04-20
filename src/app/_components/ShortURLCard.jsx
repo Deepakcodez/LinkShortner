@@ -5,7 +5,7 @@ import { IoIosSend } from "react-icons/io";
 
 export const ShortURLCard = (props) => {
   console.log('>>>>>>>>>>>', props)
-  const { shortURL, redirectURL, clicks } = props;
+  const { shortURL, redirectURL, shortId } = props;
 
   const copyToClipboard = async () => {
     try {
@@ -17,7 +17,7 @@ export const ShortURLCard = (props) => {
   };
 
   const redirectToShortURL = () => {
-    window.open(shortURL, '_blank'); // Open short URL in a new tab
+    window.open(`ls/${shortId}`, '_blank'); // Open short URL in a new tab
   };
 
 
