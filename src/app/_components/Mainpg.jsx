@@ -40,7 +40,7 @@ const Mainpg = () => {
             <div className="w-full ">
                 <h1 className=" text-4xl md:text-7xl font-medium text-white text-center pt-20">URL<span className="italic font-medium text-violet-500">SHORTNER</span></h1>
 
-                <div className=" w-full flex flex-col md:flex-row  items-center justify-center mt-4 gap-3">
+                <div className=" w-full flex flex-col md:flex-row  items-center justify-center mt-[3rem] gap-3">
 
                     <input
                         className="rounded-md w-[90%] md:w-[50%] h-9 px-3  "
