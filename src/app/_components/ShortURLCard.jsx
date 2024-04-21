@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { IoIosSend } from "react-icons/io";
 
 export const ShortURLCard = (props) => {
-  console.log('>>>>>>>>>>>', props)
+  // console.log('>>>>>>>>>>>', props)
   const { shortURL, redirectURL, shortId } = props;
 
   //copy short url

@@ -1,40 +1,44 @@
 "use client"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import {ShortURLCard} from "./ShortURLCard"
+import { ShortURLCard } from "./ShortURLCard"
 const Mainpg = () => {
 
-    const [URL, setURL] = useState({URL:""})
+    const [URL, setURL] = useState({ URL: "" })
     const [shortURL, setShortURL] = useState("")
     const [redirectURL, setRedirectURL] = useState(null)
     const [clicks, setClicks] = useState(Number)
     const [shortId, setShortId] = useState(null)
     const changehandler = (e) => {
         e.preventDefault()
-        setURL({URL : e.target.value})
+        setURL({ URL: e.target.value })
     }
 
     const convert = async () => {
         try {
-
+            if(!URL || URL.URL.trim()=== ""){
+                 console.log('>>>>>>>>>>>No URL provided')
+                 return
+            }
             const resp = await axios.post("/api/url", URL)
-            console.log('>>>>>>>>>>>', resp.data.savedURL)
+            // console.log('>>>>>>>>>>>', resp.data.savedURL)
             const respShortURL = resp.data.savedURL.shortURL;
             const shortURLTEMPLATE = `urlss.vercel.app/ls/${respShortURL}`;
             setShortURL(shortURLTEMPLATE)
             setRedirectURL(resp.data.savedURL.redirectURL)
             setClicks(resp.data.savedURL.clickes)
             setShortId(resp.data.savedURL.shortURL)
-            setURL({url : ""})
+            setURL({ url: "" })
 
         } catch (error) {
             console.log('>>>>>>>>>>>', error)
         }
 
     }
-    useEffect(()=>{
-        console.log('>>>>>>>>>>>', shortURL)
-    },[])
+    useEffect(() => {
+        // console.log('>>>>>>>>>>>url.url', URL.URL)
+
+    }, [])
     return (
         <>
             <div className="w-full ">
@@ -50,9 +54,9 @@ const Mainpg = () => {
                         placeholder="Enter Url" />
                     <button
                         onClick={convert}
-                        className="px-2 h-9 hover:bg-violet-300 bg-violet-200 rounded-lg ring-violet-500 ring-1">Convert</button>
+                        className="px-2 h-9 hover:text-white hover:bg-violet-500 bg-violet-400 rounded-lg ring-violet-300 ring-1">Convert</button>
                 </div>
-             <ShortURLCard shortId={shortId} shortURL={shortURL} redirectURL={redirectURL} clicks={clicks} />
+                <ShortURLCard shortId={shortId} shortURL={shortURL} redirectURL={redirectURL} clicks={clicks} />
             </div>
         </>
     );
