@@ -1,6 +1,8 @@
 "use client"
 import axios from "axios";
 import { useEffect } from "react";
+import Lottie from "lottie-react";
+import loader from "../../../../public/loader.json";
 
 const Redirector = (props) => {
   const shortId = props.params.shortid;
@@ -22,7 +24,10 @@ const Redirector = (props) => {
 
   return (
     <>
-      <h1>Redirector</h1>
+    <div className="w-full h-screen bg-slate-900 flex flex-col justify-center items-center ">
+      <Lottie animationData={loader} loop={true}/>
+
+    </div>
     </>
   );
 };
