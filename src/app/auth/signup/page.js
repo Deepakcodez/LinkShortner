@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import React from "react";
 
-const signIn = () => {
+const SignUp = () => {
   const [errorMsg, setErrorMsg] = useState("error message");
   const [inputValue, setInputValue] = useState({
     name : "",
@@ -75,4 +75,4 @@ const signIn = () => {
   );
 };
 
-export default signIn;
+export default SignUp;
