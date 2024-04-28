@@ -2,7 +2,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { ShortURLCard } from "./ShortURLCard"
-
+import ProfileButton from './Profilebutton'
 
 const Mainpg = () => {
 
@@ -44,7 +44,8 @@ const Mainpg = () => {
    
     return (
         <>
-            <div className="w-full ">
+            <div className="w-full  ">
+                <ProfileButton/>
                 <h1 className=" text-4xl md:text-7xl font-medium text-white text-center pt-20">URL<span className="italic font-medium text-violet-500">SHORTNER</span></h1>
 
                 <div className=" w-full flex flex-col md:flex-row  items-center justify-center mt-[3rem] gap-3">
@@ -54,7 +55,7 @@ const Mainpg = () => {
                         type="text"
                         value={URL.URL || ""}
                         onChange={changehandler}
-                        placeholder="Enter Url" />
+                        placeholder="Paste Url" />
                     <button
                         onClick={convert}
                         className="px-2 w-[8rem] h-9 text-violet-200 hover:text-violet-100 hover:bg-violet-600 bg-violet-500 rounded-lg ring-violet-300 ring-1">

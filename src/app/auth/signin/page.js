@@ -54,7 +54,7 @@ const SignIn = () => {
           </div>
           <div className="mt-2">
             <h1 className="text-sm text-center cursor-pointer">
-              Haven't any account?{" "}
+              Haven`&apos;`t any account?{" "}
               <span className="text-violet-500" onClick={navigateToSignUp}>
                 Create
               </span>
