@@ -7,12 +7,13 @@ connect();
 
 export async function POST(request) {
   try {
+    console.log(">>>>>>>>>>>inside fun");
     //getting body data
     const reqBody = await request.json();
-    let { name, email, password } = reqBody;
+    let { name, email, password, } = reqBody;
     console.log(">>>>>>>>>>>body data", name, email, password);
 
-    if (!email || !password || !password) {
+    if (!email || !name || !password) {
       return NextResponse.json(
         {
           error: "something error occurs",
@@ -22,32 +23,42 @@ export async function POST(request) {
       );
     }
 
+    let user = await Users.findOne({ email }).select("+password");
+    console.log(">>>>>>>>>>>user", user);
+
+    if (!user) {
+      //hashing user password
+      const hashedPassword = await hash(password, 10);
+      console.log('>>>>>>>>>>>hashed password', hashedPassword)
+      // create new user
+
     
-    let user = await Users.findOne({ email });
-    console.log(">>>>>>>>>>>url in db", user);
+      // create new user
+      const newUser = new Users({ 
+        name,
+        email,
+        password: hashedPassword,
+      });
 
-   if(user) throw new Error("User already exist")
- 
+      const createdUser = await newUser.save(); // Save the new user instance
 
-
-    //hashing user password
-    const hashedPassword = await hash(password,10)
-// create new user
-    
-Users.create({
-    name,
-    email,
-    password : hashedPassword,
-})
-    const createdUser = await Users.save()
-    // Return a successful response with the query parameters
-    return NextResponse.json(
-      {
-        createdUserF,
-        success: true,
-      },
-      { status: 200 }
-    );
+      // Return a successful response with the query parameters
+      return NextResponse.json(
+        {
+          createdUser,
+          success: true,
+        },
+        { status: 200 }
+      );
+    } else {
+      return NextResponse.json(
+        {
+          message: "user already exist",
+          success: false,
+        },
+        { status: 400 }
+      );
+    }
   } catch (error) {
     return NextResponse.json(
       {

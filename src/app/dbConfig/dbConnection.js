@@ -3,7 +3,9 @@ const mongoURI = process.env.MONGO_URI
 
 export async function connect() {
     try {
-        await mongoose.connect(mongoURI, {});
+        await mongoose.connect(mongoURI, {
+            dbName : "LinkShortner",
+        });
 
         console.log('Database connected successfully');
     } catch (error) {

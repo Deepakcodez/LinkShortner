@@ -1,17 +1,18 @@
 "use client";
 
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import React from "react";
 
 const SignUp = () => {
-  const [errorMsg, setErrorMsg] = useState("error message");
+  const [errorMsg, setErrorMsg] = useState("");
   const [inputValue, setInputValue] = useState({
-    name : "",
+    name: "",
     email: "",
     password: "",
   });
- const router = useRouter()
+  const router = useRouter();
 
   const onchangeHandler = (e) => {
     const { name, value } = e.target;
@@ -21,10 +22,36 @@ const SignUp = () => {
     });
   };
 
-  const navigator=()=>{
-    router.push('/auth/signin ')
-  }
+  const createUser = async (e) => {
+    e.preventDefault()
+    try {
+      // Check if required fields are filled
+      if (!inputValue.name || !inputValue.email || !inputValue.password) {
+        throw new Error("Please fill in all fields");
+      }
+  
+      // Make POST request to create user
+      const resp = await axios.post("/api/signup", inputValue);
+      console.log('>>>>>>>>>>>', resp.status)
+      // Check if request was successful
+      if (resp.status === 200) {
+        // Redirect to login page after successful signup
+        router.push("/auth/signin");
+      } else {
+        // Display error message if request was not successful
+        setErrorMsg("Failed to sign up. Please try again later.");
+      }
+    } catch (error) {
+      // Display error message if an error occurs during signup
+      setErrorMsg(error.message);
+    }
+  };
+  
+  const navigator = () => {
+    router.push("/auth/signin ");
+  };
 
+  
   return (
     <>
       <div className="grid place-items-center h-screen w-full bg-violet-50 ">
@@ -34,7 +61,7 @@ const SignUp = () => {
             <input
               type="text"
               value={inputValue.name}
-              name="email"
+              name="name"
               onChange={onchangeHandler}
               placeholder="Enter Your Name"
               className="block flex-1 text-black border-0 bg-violet-100 py-1.5 px-2   rounded-md text-white-900 placeholder:text-gray-400 focus:ring-0 focus:border-0 sm:text-sm sm:leading-6"
@@ -55,7 +82,10 @@ const SignUp = () => {
               placeholder="Enter Your password"
               className="block flex-1 text-black border-0 bg-violet-100 py-1.5 px-2   rounded-md text-white-900 placeholder:text-gray-400 focus:ring-0 focus:border-0 sm:text-sm sm:leading-6"
             />
-            <button className="bg-violet-500 py-2 rounded-md text-white font-semibold hover:bg-violet-600">
+            <button
+              onClick={createUser}
+              className="bg-violet-500 py-2 rounded-md text-white font-semibold hover:bg-violet-600"
+            >
               Register
             </button>
           </form>
@@ -63,11 +93,13 @@ const SignUp = () => {
             <h1 className="text-sm text-violet-700/50">{errorMsg}</h1>
           </div>
           <div className="mt-2">
-            <h1 className="text-sm text-center cursor-pointer">Have an account? 
-             <span className="text-violet-500"
-             onClick={navigator}
-             > Login</span>
-             </h1>
+            <h1 className="text-sm text-center cursor-pointer">
+              Have an account?
+              <span className="text-violet-500" onClick={navigator}>
+                {" "}
+                Login
+              </span>
+            </h1>
           </div>
         </div>
       </div>

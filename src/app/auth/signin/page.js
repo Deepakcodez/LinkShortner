@@ -1,9 +1,11 @@
 "use client"
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+
 
 const SignIn = () => {
-  const [errorMsg, setErrorMsg] = useState("error message");
+  const [errorMsg, setErrorMsg] = useState("");
   const [inputValue, setInputValue] = useState({
     email: "",
     password: "",
@@ -16,6 +18,20 @@ const SignIn = () => {
       ...inputValue,
       [name]: value,
     });
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signIn("credentials", {
+        email: inputValue.email,
+        password: inputValue.password,
+      });
+  
+      router.push("/");
+    } catch (error) {
+      setErrorMsg(error.message);
+    }
   };
 
   const navigateToSignUp = () => {
@@ -38,14 +54,16 @@ const SignIn = () => {
               className="block flex-1 text-black border-0 bg-violet-100 py-1.5 px-2 rounded-md text-white-900 placeholder:text-gray-400 focus:ring-0 focus:border-0 sm:text-sm sm:leading-6"
             />
             <input
-              type="text"
+              type="password"
               value={inputValue.password}
               name="password"
               onChange={onchangeHandler}
               placeholder="Enter Your password"
               className="block flex-1 text-black border-0 bg-violet-100 py-1.5 px-2 rounded-md text-white-900 placeholder:text-gray-400 focus:ring-0 focus:border-0 sm:text-sm sm:leading-6"
             />
-            <button className="bg-violet-500 py-2 rounded-md text-white font-semibold hover:bg-violet-600">
+            <button
+            onClick={handleLogin}
+            className="bg-violet-500 py-2 rounded-md text-white font-semibold hover:bg-violet-600">
               Login
             </button>
           </form>
@@ -54,7 +72,7 @@ const SignIn = () => {
           </div>
           <div className="mt-2">
             <h1 className="text-sm text-center cursor-pointer">
-              Haven`&apos;`t any account?{" "}
+              Haven&apos;t any account?{" "}
               <span className="text-violet-500" onClick={navigateToSignUp}>
                 Create
               </span>
