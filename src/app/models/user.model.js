@@ -24,6 +24,6 @@ const UserSchema = new mongoose.Schema(
 );
 
 
-const Users =  models?.Users || model("Users", UserSchema);
+const Users =  mongoose.models?.Users || model("Users", UserSchema);
 
 export default Users;
