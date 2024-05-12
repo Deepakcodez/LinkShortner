@@ -1,9 +1,12 @@
-"use client"
 import Image from "next/image";
 import Mainpg from "./_components/Mainpg";
 import vidBG from  './../../public/video3.mp4'
-export default function Home() {
+import { auth } from "../auth";
+export default async function Home() {
+  const session = await auth()
+  console.log('>>>>>>>>>>>user deatil', session)
   return (
+    
    <>
    <div className="relative z-10 w-full h-screen relative bg-slate-800">
     

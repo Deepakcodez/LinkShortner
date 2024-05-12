@@ -2,7 +2,9 @@ import mongoose from "mongoose";
 const mongoURI = process.env.MONGO_URI
 
 export async function connect() {
+
     try {
+        if(mongoose.connection && mongoose.connection[0].readyState) return;
         await mongoose.connect(mongoURI, {
             dbName : "LinkShortner",
         });

@@ -53,11 +53,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           });
         }
           console.log('>>>>>>>>>>>user find from auth page', user)
+          
           return user;
         
       },
     }),
   ],
+  session: {
+    jwt: true, // Use JSON Web Tokens for session management
+    maxAge:10* 24 * 60 * 60, //10* 24hr   10hours (in seconds)
+  },
   pages: {
     signIn : "/auth/signin"
   }
