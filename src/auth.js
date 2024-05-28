@@ -53,7 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           });
         }
           console.log('>>>>>>>>>>>user find from auth page', user)
-          
+            
           return user;
         
       },
@@ -67,3 +67,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn : "/auth/signin"
   }
 });
+
+

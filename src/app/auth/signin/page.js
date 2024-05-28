@@ -1,7 +1,8 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { auth } from "../../../auth";
 
 
 const SignIn = () => {
@@ -12,6 +13,10 @@ const SignIn = () => {
   });
   const router = useRouter();
 
+
+ 
+  
+  
   const onchangeHandler = (e) => {
     const { name, value } = e.target;
     setInputValue({
@@ -23,12 +28,17 @@ const SignIn = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signIn("credentials", {
+     const result =  await signIn("credentials", {
         email: inputValue.email,
         password: inputValue.password,
+        redirect: false, // Prevents NextAuth from automatically redirecting
+
       });
-  
-      router.push("/");
+      if (result?.error) {
+        setErrorMsg(result.error);
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       setErrorMsg(error.message);
     }

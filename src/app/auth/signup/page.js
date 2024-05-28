@@ -36,7 +36,7 @@ const SignUp = () => {
       // Check if request was successful
       if (resp.status === 200) {
         // Redirect to login page after successful signup
-        router.push("/auth/signin");
+        router.push("/");
       } else {
         // Display error message if request was not successful
         setErrorMsg("Failed to sign up. Please try again later.");

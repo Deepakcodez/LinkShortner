@@ -3,10 +3,11 @@ const mongoURI = process.env.MONGO_URI
 
 export async function connect() {
 
+
     try {
-        if(mongoose.connection && mongoose.connection[0].readyState) return;
+        if(mongoose.connection && mongoose.connection[0]) return;
         await mongoose.connect(mongoURI, {
-            dbName : "LinkShortner",
+            // dbName : "LinkShortner",
         });
 
         console.log('Database connected successfully');
