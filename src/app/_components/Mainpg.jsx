@@ -3,7 +3,6 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { ShortURLCard } from "./ShortURLCard"
 import ProfileButton from './Profilebutton'
-
 const Mainpg = () => {
 
     const [URL, setURL] = useState({ URL: "" })
@@ -17,35 +16,33 @@ const Mainpg = () => {
         setURL({ URL: e.target.value })
     }
 
-    const convert = async () => {
-        try {
-            if (!URL || URL.URL.trim() === "") {
-                console.log('>>>>>>>>>>>No URL provided')
-                return
-            }
-            setLoader(true)
-            const resp = await axios.post("/api/url", URL)
-
-            // console.log('>>>>>>>>>>>', resp.data.savedURL)
-            const respShortURL = resp.data.savedURL.shortURL;
-            const shortURLTEMPLATE = `urlss.vercel.app/ls/${respShortURL}`;
-            setShortURL(shortURLTEMPLATE)
-            setRedirectURL(resp.data.savedURL.redirectURL)
-            setClicks(resp.data.savedURL.clickes)
-            setShortId(resp.data.savedURL.shortURL)
-            setURL({ url: "" })
-            setLoader(false)
-        } catch (error) {
-            console.log('>>>>>>>>>>>', error)
-            setLoader(false)
+    const convert = () => {
+        if (!URL.URL || URL.URL.trim() === "") {
+            console.log('No URL provided');
+            return;
         }
+        setLoader(true);
+        axios.post("/api/url", URL)
+            .then(resp => {
+                const respShortURL = resp.data.savedURL.shortURL;
+                const shortURLTEMPLATE = `urlss.vercel.app/ls/${respShortURL}`;
+                setShortURL(shortURLTEMPLATE);
+                setRedirectURL(resp.data.savedURL.redirectURL);
+                setClicks(resp.data.savedURL.clickes);
+                setShortId(resp.data.savedURL.shortURL);
+                setURL({ URL: "" });
+                setLoader(false);
+            })
+            .catch(error => {
+                console.log(error);
+                setLoader(false);
+            });
+    };
 
-    }
-   
     return (
         <>
             <div className="w-full  ">
-                <ProfileButton/>
+                <ProfileButton />
                 <h1 className=" text-4xl md:text-7xl font-medium text-white text-center pt-20">URL<span className="italic font-medium text-violet-500">SHORTNER</span></h1>
 
                 <div className=" w-full flex flex-col md:flex-row  items-center justify-center mt-[3rem] gap-3">

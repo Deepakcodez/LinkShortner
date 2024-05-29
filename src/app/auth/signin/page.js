@@ -37,7 +37,7 @@ const SignIn = () => {
       if (result?.error) {
         setErrorMsg(result.error);
       } else {
-        router.push("/");
+        router.push("/profile");
       }
     } catch (error) {
       setErrorMsg(error.message);

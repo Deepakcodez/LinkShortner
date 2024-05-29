@@ -2,6 +2,8 @@ import Image from "next/image";
 import Mainpg from "./_components/Mainpg";
 import vidBG from  './../../public/video3.mp4'
 import { auth } from "../auth";
+
+
 export default async function Home() {
   const session = await auth()
   console.log('>>>>>>>>>>>user deatil', session)
