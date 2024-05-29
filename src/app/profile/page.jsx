@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import { getSession, useSession } from 'next-auth/react';
-import { auth } from '../../auth';
+// import { auth } from '../../auth';
 import Userlinks from '../_components/UserLinks';
 
 
