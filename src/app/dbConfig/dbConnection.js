@@ -1,13 +1,17 @@
-import mongoose from "mongoose";
-const mongoURI = process.env.MONGO_URI
+import mongoose from 'mongoose';
+
+const mongoURI = process.env.MONGO_URI;
 
 export async function connect() {
-
-
     try {
-        if(mongoose.connection && mongoose.connection[0]) return;
+        if (mongoose.connection.readyState === 1) {
+            console.log('Already connected to the database.');
+            return;
+        }
+        
         await mongoose.connect(mongoURI, {
-            // dbName : "LinkShortner",
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
         });
 
         console.log('Database connected successfully');
