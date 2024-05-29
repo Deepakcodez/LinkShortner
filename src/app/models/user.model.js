@@ -20,10 +20,7 @@ const UserSchema = new mongoose.Schema(
        default:"hello"
     },
     urls: {
-      type: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'URLs'
-      }],
+      type: [String],
       default: [],
     },
   },
