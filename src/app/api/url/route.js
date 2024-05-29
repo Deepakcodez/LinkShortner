@@ -2,50 +2,72 @@ import { NextRequest, NextResponse } from "next/server";
 import { customAlphabet } from "nanoid";
 import URLs from "../../models/url";
 import { connect } from "../../dbConfig/dbConnection";
+import { auth } from "../../../auth";
+import Users from "../../models/user.model";
 
 connect();
 
 export async function POST(request) {
   try {
+    const session = await auth();
+    if (!session || !session.user || !session.user.email) {
+      return NextResponse.json(
+        {
+          error: "User not authenticated",
+          success: false,
+        },
+        { status: 401 }
+      );
+    }
+
+    const email = session.user.email;
+
     //getting body data
     const reqBody = await request.json();
-    let { URL } = reqBody;
-    console.log(">>>>>>>>>>>body data", URL);
+    const { URL } = reqBody;
 
     if (!URL) {
       return NextResponse.json(
         {
-          error: "Body data not received",
+          error: "URL not provided",
           success: false,
         },
         { status: 400 }
       );
     }
 
-    //generating nano id
+   
+    
+    
+
+    // Generating nanoid
     const nanoid = customAlphabet("1234567890abcdef", 10);
     const shortURL = nanoid();
-    console.log(">>>>>>>>>>>nano id", shortURL);
 
     let urlDocument = await URLs.findOne({ redirectURL: URL });
-    console.log(">>>>>>>>>>>url in db", urlDocument);
 
-    if (!urlDocument || urlDocument === null) {
-      const newUrlDocument = new URLs({
+    if (!urlDocument) {
+      urlDocument = new URLs({
         shortURL,
         redirectURL: URL,
         clickes: 0,
       });
-      urlDocument = await newUrlDocument.save();
     }
 
-    // increasing clickes in every api hit wheater it is exist or not
-    // if not than firstly create the entry than increase by 1
+    // Increasing clickes in every api hit whether it exists or not
     urlDocument.clickes += 1;
-
     const savedURL = await urlDocument.save();
 
-    // Return a successful response with the query parameters
+    // Updating user URLs array
+    if(email){
+      const user = await Users.findOne({ email });
+      console.log('>>>>>>>>>>> user --->', user)
+
+      user.urls.push(savedURL._id);
+      await user.save();
+    }
+
+    // Returning a successful response with the saved URL
     return NextResponse.json(
       {
         savedURL,
@@ -54,6 +76,7 @@ export async function POST(request) {
       { status: 200 }
     );
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       {
         error: "Internal server error",

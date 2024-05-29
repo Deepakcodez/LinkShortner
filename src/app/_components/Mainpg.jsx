@@ -3,6 +3,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { ShortURLCard } from "./ShortURLCard"
 import ProfileButton from './Profilebutton'
+import Userdata from "./UserLinks"
 const Mainpg = () => {
 
     const [URL, setURL] = useState({ URL: "" })
@@ -67,6 +68,7 @@ const Mainpg = () => {
                 </div>
                 <ShortURLCard shortId={shortId} shortURL={shortURL} redirectURL={redirectURL} clicks={clicks} />
             </div>
+            <Userdata/>
         </>
     );
 }

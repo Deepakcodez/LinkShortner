@@ -1,6 +1,8 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import mongoose from "mongoose";
 
-const URLSchema = new mongoose.Schema(
+const { Schema, model, models } = mongoose;
+
+const URLSchema = new Schema(
   {
     shortURL: {
       type: String,
@@ -11,16 +13,14 @@ const URLSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    clickes : {
-      type : Number,
-      default : 0,
+    clickes: {
+      type: Number,
+      default: 0,
     },
   },
-  
-  { timestamp: true }
+  { timestamps: true }
 );
 
-
-const URLs =  models.URLs || model("URLs", URLSchema);
+const URLs = models?.URLs || model("URLs", URLSchema);
 
 export default URLs;

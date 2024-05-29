@@ -38,6 +38,7 @@ export async function POST(request) {
         name,
         email,
         password: hashedPassword,
+        URLs : []
       });
 
       const createdUser = await newUser.save(); // Save the new user instance

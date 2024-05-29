@@ -1,4 +1,5 @@
 import mongoose, { Schema, model, models } from "mongoose";
+import URLs from "./url";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -10,20 +11,26 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    password : {
-      type : String,
-      select : false,
+    password: {
+      type: String,
+      select: false,
     },
-    urls : {
-      type : String,
-
-    }
+    sample:{
+       type: String,
+       default:"hello"
+    },
+    urls: {
+      type: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'URLs'
+      }],
+      default: [],
+    },
   },
-  
-  { timestamp: true }
+
+  { timestamps: true }
 );
 
-
-const Users =  mongoose.models?.Users || model("Users", UserSchema);
+const Users = mongoose.models?.Users || model("Users", UserSchema);
 
 export default Users;
