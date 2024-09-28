@@ -6,9 +6,7 @@ import { hash } from "bcryptjs";
 connect();
 
 // Force the API to use the Node.js runtime
-export const config = {
-  runtime: 'nodejs', // Ensures this API runs in the Node.js environment
-};
+export const runtime = "nodejs"
 
 export async function POST(request) {
   try {
