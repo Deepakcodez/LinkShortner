@@ -5,6 +5,11 @@ import URLs from "../../models/url";
 import { connect } from "../../dbConfig/dbConnection";
 connect();
 
+// Force the API to use the Node.js runtime
+export const config = {
+  runtime: 'nodejs', // Ensures this API runs in the Node.js environment
+};
+
 export async function POST(request) {
   //getting body data
   const reqBody = await request.json();
