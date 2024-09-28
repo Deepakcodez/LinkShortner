@@ -19,11 +19,12 @@ const UserSchema = new mongoose.Schema(
        type: String,
        default:"hello"
     },
-    urls: {
-      type: [String],
-      default: [],
+    urls: [
+      {
+        type: String,
+    }
+    ]
     },
-  },
 
   { timestamps: true }
 );

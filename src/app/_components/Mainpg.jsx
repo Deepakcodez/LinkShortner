@@ -1,6 +1,6 @@
 "use client"
 import axios from "axios"
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { ShortURLCard } from "./ShortURLCard"
 import ProfileButton from './Profilebutton'
 
@@ -26,6 +26,7 @@ const Mainpg = () => {
         setLoader(true);
         axios.post("/api/url", URL)
             .then(resp => {
+                console.log(resp.data);
                 const respShortURL = resp.data.savedURL.shortURL;
                 const shortURLTEMPLATE = `urlss.vercel.app/ls/${respShortURL}`;
                 setShortURL(shortURLTEMPLATE);

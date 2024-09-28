@@ -1,6 +1,5 @@
 import { CircleUserRound } from 'lucide-react';
 import Link from 'next/link';
-import { auth } from '../../auth';
 
 const ProfileButton = () => {
    
