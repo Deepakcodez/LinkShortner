@@ -7,25 +7,12 @@ import Users from "../../models/user.model";
 
 connect();
 
-// Force the API to use the Node.js runtime
-export const runtime = "nodejs" 
-
 export async function POST(request) {
   try {
+    // Check if the user is authenticated
     const session = await auth();
-    if (!session || !session.user || !session.user.email) {
-      return NextResponse.json(
-        {
-          error: "User not authenticated",
-          success: false,
-        },
-        { status: 401 }
-      );
-    }
 
-    const email = session.user.email;
-
-    //getting body data
+    // Get the body data
     const reqBody = await request.json();
     const { URL } = reqBody;
 
@@ -39,17 +26,15 @@ export async function POST(request) {
       );
     }
 
-   
-    
-    
-
-    // Generating nanoid
+    // Generate nanoid
     const nanoid = customAlphabet("1234567890abcdef", 10);
     const shortURL = nanoid();
 
+    // Check if the URL already exists
     let urlDocument = await URLs.findOne({ redirectURL: URL });
 
     if (!urlDocument) {
+      // Create a new URL entry if it doesn't exist
       urlDocument = new URLs({
         shortURL,
         redirectURL: URL,
@@ -57,20 +42,22 @@ export async function POST(request) {
       });
     }
 
-    // Increasing clickes in every api hit whether it exists or not
+    // Increase the click count
     urlDocument.clickes += 1;
     const savedURL = await urlDocument.save();
 
-    // Updating user URLs array
-    if(email){
+    // If user is authenticated, update user's URL array
+    if (session && session.user && session.user.email) {
+      const email = session.user.email;
       const user = await Users.findOne({ email });
-      console.log('>>>>>>>>>>> user --->', user)
 
-      user.urls.push(shortURL);
-      await user.save();
+      if (user) {
+        user.urls.push(shortURL); // Add short URL to the user's URL array
+        await user.save();
+      }
     }
 
-    // Returning a successful response with the saved URL
+    // Return the short URL regardless of user authentication
     return NextResponse.json(
       {
         savedURL,

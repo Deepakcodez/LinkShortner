@@ -32,11 +32,10 @@ const SignUp = () => {
   
       // Make POST request to create user
       const resp = await axios.post("/api/signup", inputValue);
-      console.log('>>>>>>>>>>>', resp.status)
       // Check if request was successful
       if (resp.status === 200) {
         // Redirect to login page after successful signup
-        router.push("/");
+        router.push("/auth/signin");
       } else {
         // Display error message if request was not successful
         setErrorMsg("Failed to sign up. Please try again later.");

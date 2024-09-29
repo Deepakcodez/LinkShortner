@@ -5,8 +5,6 @@ import Users from "../../models/user.model";
 
 connect();
 
-// Force the API to use the Node.js runtime
-export const runtime = "nodejs"
 
 export async function GET(request) {
   try {
