@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 
 const { Schema, model, models } = mongoose;
 
+export const runtime = "nodejs" 
+
 const URLSchema = new Schema(
   {
     shortURL: {

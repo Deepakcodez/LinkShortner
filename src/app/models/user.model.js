@@ -1,6 +1,8 @@
 import mongoose, { Schema, model, models } from "mongoose";
 import URLs from "./url";
 
+export const runtime = "nodejs" 
+
 const UserSchema = new mongoose.Schema(
   {
     name: {
